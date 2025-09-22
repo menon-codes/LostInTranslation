@@ -14,6 +14,7 @@ import java.util.List;
 public class CanadaTranslator implements Translator {
 
     public static final String CANADA = "can";
+
     /**
      * Return the language code for all languages whose translations are
      * available for translating "can".
@@ -22,7 +23,7 @@ public class CanadaTranslator implements Translator {
      */
     @Override
     public List<String> getLanguageCodes() {
-        return new ArrayList<>(List.of("de", "en", "zh"));
+        return new ArrayList<>(List.of("de", "en", "es", "fr", "zh"));
     }
 
     /**
@@ -37,11 +38,13 @@ public class CanadaTranslator implements Translator {
     }
 
     /**
-     * Return the name of the country based on the specified country code and language code.
+     * Return the name of the country based on the specified country code and
+     * language code.
      *
      * @param countryCode  the 3-letter country code
      * @param languageCode the 2-letter language code
-     * @return the name of the country in the given language or null if no translation is available
+     * @return the name of the country in the given language or null if no
+     *         translation is available
      */
     @Override
     public String translate(String countryCode, String languageCode) {
@@ -50,14 +53,15 @@ public class CanadaTranslator implements Translator {
         }
         if (languageCode.equals("de")) {
             return "Kanada";
-        }
-        else if (languageCode.equals("en")) {
+        } else if (languageCode.equals("en")) {
             return "Canada";
-        }
-        else if ("zh".equals(languageCode)) {
+        } else if (languageCode.equals("es")) {
+            return "Canadá";
+        } else if (languageCode.equals("fr")) {
+            return "Canada";
+        } else if ("zh".equals(languageCode)) {
             return "加拿大";
-        }
-        else {
+        } else {
             return null;
         }
     }

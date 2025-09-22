@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class provides the service of converting country codes to their names and back.
+ * This class provides the service of converting country codes to their names
+ * and back.
  */
 public class CountryCodeConverter {
 
@@ -26,8 +27,11 @@ public class CountryCodeConverter {
     }
 
     /**
-     * Overloaded constructor that allows us to specify the filename to load the country code data from.
-     * @param filename the name of the file in the resources folder to load the data from
+     * Overloaded constructor that allows us to specify the filename to load the
+     * country code data from.
+     * 
+     * @param filename the name of the file in the resources folder to load the data
+     *                 from
      * @throws RuntimeException if the resources file can't be loaded properly
      */
     public CountryCodeConverter(String filename) {
@@ -41,11 +45,10 @@ public class CountryCodeConverter {
             while (iterator.hasNext()) {
                 String line = iterator.next();
                 String[] parts = line.split("\t");
-                countryToCountryCode.put(parts[0], parts[2]);
-                countryCodeToCountry.put(parts[2], parts[0]);
+                countryCodeToCountry.put(parts[0], parts[2]);
+                countryToCountryCode.put(parts[2], parts[0]);
             }
-        }
-        catch (IOException | URISyntaxException ex) {
+        } catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
         }
 
@@ -53,24 +56,27 @@ public class CountryCodeConverter {
 
     /**
      * Return the name of the country for the given country code.
+     * 
      * @param code the 3-letter code of the country
      * @return the name of the country corresponding to the code
      */
     public String fromCountryCode(String code) {
-        return countryCodeToCountry.get(code);
+        return countryCodeToCountry.getOrDefault(code, code);
     }
 
     /**
      * Return the code of the country for the given country name.
+     * 
      * @param country the name of the country
      * @return the 3-letter code of the country
      */
     public String fromCountry(String country) {
-        return countryToCountryCode.get(country);
+        return countryToCountryCode.getOrDefault(country, country);
     }
 
     /**
      * Return how many countries are included in this country code converter.
+     * 
      * @return how many countries are included in this country code converter.
      */
     public int getNumCountries() {

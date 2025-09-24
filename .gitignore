@@ -8,5 +8,11 @@
 /dataSources.local.xml
 # idea
 /.idea/
+# vscode
+.vscode/
+# github
+.github/
 # target
-/target/
+target/**
+*.class
+target/classes/examples/**

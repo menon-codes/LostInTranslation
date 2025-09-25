@@ -18,14 +18,12 @@ public class JListDemo {
             languagePanel.setLayout(new GridLayout(0, 2));
             languagePanel.add(new JLabel("Language:"), 0);
 
-
             Translator translator = new CanadaTranslator();
 
             String[] items = new String[translator.getLanguageCodes().size()];
 
-            JComboBox<String> languageComboBox = new JComboBox<>();
             int i = 0;
-            for(String langaugeCode : translator.getLanguageCodes()) {
+            for (String langaugeCode : translator.getLanguageCodes()) {
                 items[i++] = langaugeCode;
             }
 
@@ -41,7 +39,6 @@ public class JListDemo {
             JPanel mainPanel = new JPanel();
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             mainPanel.add(languagePanel);
-
 
             list.addListSelectionListener(new ListSelectionListener() {
 
@@ -60,7 +57,7 @@ public class JListDemo {
                     }
 
                     JOptionPane.showMessageDialog(null, "User selected:" +
-                                                   System.lineSeparator() + Arrays.toString(items));
+                            System.lineSeparator() + Arrays.toString(items));
 
                 }
             });
@@ -71,7 +68,6 @@ public class JListDemo {
             frame.setLocationRelativeTo(null); // place in centre of screen
             frame.pack();
             frame.setVisible(true);
-
 
         });
     }

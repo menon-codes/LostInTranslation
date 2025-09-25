@@ -28,16 +28,17 @@ public class JSONTranslator implements Translator {
     private final Map<String, String> translations = new HashMap<>();
 
     /**
-     * Construct a JSONTranslator using data from the sample.json resources file.
+     * Construct a JSONTranslator using data from the sample.json resources
+     * file.
      */
     public JSONTranslator() {
         this("sample.json");
     }
 
     /**
-     * Construct a JSONTranslator populated using data from the specified resources
-     * file.
-     * 
+     * Construct a JSONTranslator populated using data from the specified
+     * resources file.
+     *
      * @param filename the name of the file in resources to load the data from
      * @throws RuntimeException if the resource file can't be loaded properly
      */

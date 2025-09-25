@@ -1,7 +1,14 @@
 package translation;
 
-import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class GUI {
 
@@ -31,18 +38,15 @@ public class GUI {
             JLabel resultLabel = new JLabel("\t\t\t\t\t\t\t");
             buttonPanel.add(resultLabel);
 
-            submit.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String language = languageField.getText();
-                    String country = countryField.getText();
-
-                    String result = translator.translate(country, language);
-                    if (result == null) {
-                        result = "no translation found!";
-                    }
-                    resultLabel.setText(result);
+            submit.addActionListener((ActionEvent e) -> {
+                String language = languageField.getText();
+                String country = countryField.getText();
+                
+                String result = translator.translate(country, language);
+                if (result == null) {
+                    result = "no translation found!";
                 }
+                resultLabel.setText(result);
             });
 
             JPanel mainPanel = new JPanel();

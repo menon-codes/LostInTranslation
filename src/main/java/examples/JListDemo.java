@@ -1,13 +1,21 @@
 package examples;
 
+import java.awt.GridLayout;
+import java.util.Arrays;
+
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+
 import translation.CanadaTranslator;
 import translation.Translator;
-
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.awt.*;
-import java.util.Arrays;
 
 public class JListDemo {
 
@@ -40,27 +48,19 @@ public class JListDemo {
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             mainPanel.add(languagePanel);
 
-            list.addListSelectionListener(new ListSelectionListener() {
-
-                /**
-                 * Called whenever the value of the selection changes.
-                 *
-                 * @param e the event that characterizes the change.
-                 */
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-
-                    int[] indices = list.getSelectedIndices();
-                    String[] items = new String[indices.length];
-                    for (int i = 0; i < indices.length; i++) {
-                        items[i] = list.getModel().getElementAt(indices[i]);
-                    }
-
-                    JOptionPane.showMessageDialog(null, "User selected:" +
-                            System.lineSeparator() + Arrays.toString(items));
-
+            list.addListSelectionListener((ListSelectionEvent e) -> {
+                int[] indices = list.getSelectedIndices();
+                String[] items1 = new String[indices.length];
+                for (int i1 = 0; i1 < indices.length; i1++) {
+                    items1[i1] = list.getModel().getElementAt(indices[i1]);
                 }
-            });
+                JOptionPane.showMessageDialog(null, "User selected:" +
+                        System.lineSeparator() + Arrays.toString(items1));
+            } /**
+             * Called whenever the value of the selection changes.
+             *
+             * @param e the event that characterizes the change.
+             */ );
 
             JFrame frame = new JFrame("JList Demo");
             frame.setContentPane(mainPanel);

@@ -1,13 +1,14 @@
 package translation;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 public class GUI {
@@ -15,19 +16,32 @@ public class GUI {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             Translator translator = new JSONTranslator();
+            CountryCodeConverter countryConverter = new CountryCodeConverter();
+            LanguageCodeConverter languageConverter = new LanguageCodeConverter();
 
             JPanel countryPanel = new JPanel();
-            JTextField countryField = new JTextField(10);
-            // is it still suppsoed to be only "can" allowed?
-            countryField.setText("can");
-            countryField.setEditable(false);
+            // Create country dropdown with country names
+            List<String> countryCodes = translator.getCountryCodes();
+            JComboBox<String> countryComboBox = new JComboBox<>();
+            for (String countryCode : countryCodes) {
+                String countryName = countryConverter.fromCountryCode(countryCode);
+                countryComboBox.addItem(countryName);
+            }
+            countryComboBox.setSelectedIndex(0); // Select first country by default
             countryPanel.add(new JLabel("Country:"));
-            countryPanel.add(countryField);
+            countryPanel.add(countryComboBox);
 
             JPanel languagePanel = new JPanel();
-            JTextField languageField = new JTextField(10);
+            // Create language dropdown with language names
+            List<String> languageCodes = translator.getLanguageCodes();
+            JComboBox<String> languageComboBox = new JComboBox<>();
+            for (String languageCode : languageCodes) {
+                String languageName = languageConverter.fromLanguageCode(languageCode);
+                languageComboBox.addItem(languageName);
+            }
+            languageComboBox.setSelectedIndex(0); // Select first language by default
             languagePanel.add(new JLabel("Language:"));
-            languagePanel.add(languageField);
+            languagePanel.add(languageComboBox);
 
             JPanel buttonPanel = new JPanel();
             JButton submit = new JButton("Submit");
@@ -39,10 +53,31 @@ public class GUI {
             buttonPanel.add(resultLabel);
 
             submit.addActionListener((ActionEvent e) -> {
-                String language = languageField.getText();
-                String country = countryField.getText();
+                // Get selected items from dropdowns
+                String selectedLanguageName = (String) languageComboBox.getSelectedItem();
+                String selectedCountryName = (String) countryComboBox.getSelectedItem();
                 
-                String result = translator.translate(country, language);
+                // Convert names back to codes for translation
+                String languageCode = null;
+                String countryCode = null;
+                
+                // Find the language code for the selected language name
+                for (String langCode : translator.getLanguageCodes()) {
+                    if (selectedLanguageName.equals(languageConverter.fromLanguageCode(langCode))) {
+                        languageCode = langCode;
+                        break;
+                    }
+                }
+                
+                // Find the country code for the selected country name
+                for (String cCode : translator.getCountryCodes()) {
+                    if (selectedCountryName.equals(countryConverter.fromCountryCode(cCode))) {
+                        countryCode = cCode;
+                        break;
+                    }
+                }
+                
+                String result = translator.translate(countryCode, languageCode);
                 if (result == null) {
                     result = "no translation found!";
                 }
